@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "splendor-5f7e5": {
+      "hosting": {
+        "splendor-app": [
+          "splendor-5f7e5"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "splendor-5f7e5"
+  }
+}
