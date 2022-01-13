@@ -1,21 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
-import { HttpClient } from "@angular/common/http";
+import cardsData from "../data/cards.json";
+import { Card } from './model/card';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   public itemsData: Item[] = [];
   private items: Observable<any[]>;
-  constructor(firestore: AngularFirestore,
-    private http: HttpClient) {
+  
+  private cards: Array<Card>;
+  
+  
+  constructor(private firestore: AngularFirestore) {
+    this.cards = [];
     
-    
-    this.items = firestore.collection('items').valueChanges();
+    this.items = this.firestore.collection('items').valueChanges();
 
     this.items.subscribe({
       next: (data) => {
@@ -24,6 +28,13 @@ export class AppComponent {
       },
       error: (error)=> console.log('error', error)
     })
+
+
+  }
+  ngOnInit(): void {
+    if(!(this.cards.length > 0)){
+      this.cards = cardsData as Array<Card>;      
+    }
   }
 }
 
